@@ -1,4 +1,9 @@
 Tasks = new Mongo.Collection("tasks");
+this.Pages = new Meteor.Pagination(Tasks, {
+  perPage:5,
+  itemTemplate: "task",
+  templateName: "Tasks"
+});
 
 if (Meteor.isServer) {
   // This code only runs on the server
@@ -18,7 +23,7 @@ if (Meteor.isClient) {
 
   Meteor.subscribe("tasks");
 
-  Template.body.helpers({
+  Template.Tasks.helpers({
     tasks: function () {
       if (Session.get("hideCompleted")) {
         // If hide completed is checked, filter tasks
@@ -98,7 +103,7 @@ Meteor.methods({
       // If the task is private, make sure only the owner can delete it
       throw new Meteor.Error("not-authorized");
     }
- 
+    
     Tasks.remove(taskId);
   },
   
