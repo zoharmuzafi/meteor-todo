@@ -2,7 +2,10 @@ Tasks = new Mongo.Collection("tasks");
 this.Pages = new Meteor.Pagination(Tasks, {
   perPage:5,
   itemTemplate: "task",
-  templateName: "Tasks"
+  templateName: "Tasks",
+  sort: {
+    createdAt: -1
+  }
 });
 
 if (Meteor.isServer) {
